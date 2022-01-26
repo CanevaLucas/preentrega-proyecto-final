@@ -1,10 +1,11 @@
 
-from contextvars import Context
+from django.template.context import Context
 from xmlrpc.client import NOT_WELLFORMED_ERROR
-from django import template
+from django.template import Template
 from django.http import HttpResponse
 from django.shortcuts import render
 from datetime import datetime
+from django.template import loader
 
 from django.template import Template, context
 
@@ -21,21 +22,13 @@ def saludar_a(request, nombre):
     return HttpResponse(f"Hola {nombre}")
 
 def clientes(request):
+
+    diccionario= {f"nombre": "Lucas"}
+
+    plantilla = loader.get_template("clientes.html")
+   
+    documento = plantilla.render (diccionario)
     
-    lista_de_notas=[2,2,3,7,2,5]
-
-    diccionario = {"nombre":"apellido"}
-
-    miHtml = open ("C:\Users\Luke\Documents\PYTHON\Pre entrega proyecto final\mi_proyecto\preentrega-proyecto-final\Dietetica\templates/clientes.html")
-
-    plantilla = template(miHtml.read())
-
-    miHtml.close()
-
-    miContexto = context(diccionario)
-
-    documento = plantilla.render (miContexto)
-
     return HttpResponse(documento)
 
     # Diccionario = {
